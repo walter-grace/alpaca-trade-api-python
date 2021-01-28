@@ -6,11 +6,11 @@ log = logging.getLogger('')
 
 
 async def print_trade(t):
-    print('trade', t.symbol, t.timestamp)
+    print('trade', t)
 
 
 async def print_quote(q):
-    print('quote', q.symbol, q.timestamp)
+    print('quote', q)
 
 
 async def print_trade_update(tu):
@@ -20,10 +20,10 @@ async def print_trade_update(tu):
 def main():
     # TODO: better example
     logging.basicConfig(level=logging.INFO)
-    stream = Stream()
+    stream = Stream(raw_data=True)
     # stream.subscribe_trade_updates(print_trade_update)
-    stream.subscribe_trades(print_trade, 'AAPL', 'MSFT')
-    stream.subscribe_quotes(print_quote, 'NIO')
+    stream.subscribe_trades(print_trade, '*')
+    # stream.subscribe_quotes(print_quote, '*')
 
     @stream.on_bar('*')
     async def _(bar):
